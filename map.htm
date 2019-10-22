@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Corner Banh Mi</title>
+        
+        <link rel="stylesheet" type="text/css" href="styles.css">    
+
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap.min.css" rel="stylesheet">
+    </head>
+   <body>
+        <div class="container marketing">
+            <div class="row">
+                <div class="col-md-12" style="padding-top: 70px">
+                    <div id="gMap" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+            <hr class="featurette-divider">
+        </div>
+        
+        <script>
+            var locations = [
+                ['<h1>Corner Banh Mi</h1>', 41.973391, -87.659766, '<p>123 N. Broadway<br>Chicago, IL 60640</p>'+'<p>(773) 345 9876</p>'+'<div>'+'<div>'+'<div>'+'<div>'],
+                ['<h1>Corner Banh Mi</h1>', 42.046775, -87.681946, '<p>555 Davis St.<br>Evanston, IL 60201</p>'+'<p>(847) 565 1234</p>'+'<div>'+'<div>'+'<div>'+'<div>']
+            ];
+
+            function myMap() {
+                var chi = new google.maps.LatLng (41.900549, -87.632739);
+                
+                var myOptions = {
+                    center: chi,
+                    zoom: 10,
+                };
+              
+                var map = new google.maps.Map(document.getElementById("gMap"), myOptions);
+
+                setMarkers(map,locations)
+            }
+
+            function setMarkers(map,locations) {
+                var marker, i
+
+                for (i = 0; i < locations.length; i++) {  
+                     var loan = locations[i][0]
+                     var lat = locations[i][1]
+                     var long = locations[i][2]
+                     var add =  locations[i][3]
+
+                    latlngset = new google.maps.LatLng(lat, long);
+
+                    var marker = new google.maps.Marker ({  
+                        map: map, title: loan , position: latlngset  
+                    });
+                
+                    map.setCenter(marker.getPosition())
+
+                    var content = loan +  '</h3>' + add     
+
+                    var infowindow = new google.maps.InfoWindow()
+
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow) { 
+                        return function() {
+                            infowindow.setContent(content);
+                            infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+                }
+            }
+        </script>
+     
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2yiercqdxR-TiU8Slo2YRP3k1kIzxoqs&callback=myMap"></script>
+    </body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Corner Banh Mi</title>
+        
+        <link rel="stylesheet" type="text/css" href="styles.css">   
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap.min.css" rel="stylesheet"> 
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #54672b">
+            <a class="navbar-brand" href="#"><img src="logo.png" alt="Corner Banh Mi logo" style="width: 250px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.htm" style="color: #e9d69e">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="aboutUs.htm" style="color: #e9d69e">About Us</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="location.htm" style="color: #e6b17b">Location</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.htm" style="color: #e9d69e">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="order.htm" style="color: #e9d69e">Order Online</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container marketing">
+            <div class="row">
+                <div class="col-md-12" style="padding-top: 70px">
+                    <div id="gMap" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            var locations = [
+                ['<h1>Corner Banh Mi</h1>', 41.973391, -87.659766, '<p>123 N. Broadway<br>Chicago, IL 60640</p>'+'<p>(773) 345 9876</p>'+'<div>'+'<div>'+'<div>'+'<div>'],
+                ['<h1>Corner Banh Mi</h1>', 42.046775, -87.681946, '<p>555 Davis St.<br>Evanston, IL 60201</p>'+'<p>(847) 565 1234</p>'+'<div>'+'<div>'+'<div>'+'<div>']
+            ];
+
+            function myMap() {
+                var chi = new google.maps.LatLng (41.900549, -87.632739);
+                
+                var myOptions = {
+                    center: chi,
+                    zoom: 10,
+                };
+              
+                var map = new google.maps.Map(document.getElementById("gMap"), myOptions);
+
+                setMarkers(map,locations)
+            }
+
+            function setMarkers(map,locations) {
+                var marker, i
+
+                for (i = 0; i < locations.length; i++) {  
+                     var loan = locations[i][0]
+                     var lat = locations[i][1]
+                     var long = locations[i][2]
+                     var add =  locations[i][3]
+
+                    latlngset = new google.maps.LatLng(lat, long);
+
+                    var marker = new google.maps.Marker ({  
+                        map: map, title: loan , position: latlngset  
+                    });
+                
+                    map.setCenter(marker.getPosition())
+
+                    var content = loan +  '</h3>' + add     
+
+                    var infowindow = new google.maps.InfoWindow()
+
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow) { 
+                        return function() {
+                            infowindow.setContent(content);
+                            infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+                }
+            }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2yiercqdxR-TiU8Slo2YRP3k1kIzxoqs&callback=myMap"></script> 
+
+        <div style="background-color: #54672b">
+            <footer class="container">
+                <hr class="featurette-divider">
+
+                <h5 style="color: #e6b17b">Locations<span style="padding-left: 69.5%">Hours</span></h5>
+                <div id="locations" class="row">
+                    <div class="col-md-3" style="color: #e9d69e">
+                        <p>Argyle<br>123 N. Broadway<br>Chicago, IL 60640</p>
+                        <p>(773) 345 9876</p>
+                    </div>
+
+                    <div class="col-md-6" style="color: #e9d69e">
+                        <p>Evanston<br>555 Davis St.<br>Evanston, IL 60201</p>
+                        <p>(847) 565 1234</p>
+                    </div>
+
+                    <div class="col-md-3" style="color: #e9d69e">
+                        <p>Monday-Tuesday 8 AM to 10 PM</p>
+                        <p>Wednesday <span style="color: red">CLOSED</span></p>
+                        <p>Thursday-Sunday 8 AM to 10 PM</p>
+                    </div>
+                </div>
+                
+                <div id="social" class="row">
+                    <div class="col-md-12">
+                        <i class="fa fa-facebook-square" style="font-size: 36px; color: midnightblue;"></i>
+                        <i class="fa fa-twitter" style="font-size: 36px; color: deepskyblue;"></i>
+                        <i class="fa fa-instagram" style="font-size: 36px"></i>
+                        <i class="fa fa-yelp" style="font-size: 36px; color: red;"></i>
+                        <p style="float: right; font-size: 12px; color: #e9d69e">&copy; Corner Banh Mi</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="jquery-slim.min.js"><\/script>')</script>
+        <script src="popper.min.js"></script>
+        <script src="bootstrap.min.js"></script>
+    </body>
+</html>
